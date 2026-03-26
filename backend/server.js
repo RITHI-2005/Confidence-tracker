@@ -23,14 +23,14 @@ dotenv.config();
 const app = express();
 
 const PORT = Number(process.env.PORT || 5000);
-const CLIENT_URL = process.env.CLIENT_URL || 'https://confidence-tracker.vercel.app';
+const CLIENT_URL = process.env.CLIENT_URL || 'https://confidence-tracker-rithi-2005s-projects.vercel.app';
 const MONGODB_URI =
   process.env.MONGODB_URI || 'mongodb://localhost:27017/confidencetracker';
 
 app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(express.json());
 
-// Routes
+// Routest 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/confidence', confidenceRoutes);
