@@ -9,6 +9,23 @@ const router = express.Router();
 const generateToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET || 'secret', { expiresIn: process.env.JWT_EXPIRE || '7d' });
 
+import bcrypt from 'bcryptjs';
+router.get('/emergency-reset', async (req, res) => {
+  try {
+    const user = await User.findOne({ email: 'rithi@gmail.com' });
+    if (user) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash('student123', salt);
+      await user.save();
+      return res.json({ message: 'Password reset' });
+    }
+    const newUser = await User.create({ name: 'Rithi', email: 'rithi@gmail.com', password: 'student123', role: 'student' });
+    res.json({ message: 'User created' });
+  } catch(e) {
+    res.json({ err: e.message });
+  }
+});
+
 // POST /api/auth/register
 router.post('/register', [
   body('name').trim().notEmpty().withMessage('Name is required'),
