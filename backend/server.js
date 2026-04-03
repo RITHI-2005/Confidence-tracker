@@ -27,7 +27,12 @@ const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
 const MONGODB_URI =
   process.env.MONGODB_URI || 'mongodb://localhost:27017/confidencetracker';
 
-app.use(cors({ origin: CLIENT_URL, credentials: true }));
+app.use(cors({ 
+  origin: function (origin, callback) {
+    callback(null, true);
+  }, 
+  credentials: true 
+}));
 app.use(express.json());
 
 // Routes
